@@ -42,8 +42,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            // Log the exception or handle it based on your application's requirements
-            // For example, you can log the exception and send a 401 Unauthorized response
             logger.error("Error processing JWT token", e);
             SecurityContextHolder.clearContext();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired token");
