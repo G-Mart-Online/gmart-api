@@ -1,5 +1,6 @@
 package com.gmart.gmart_api.service;
 
+import com.gmart.gmart_api.dto.CredentialsDto;
 import com.gmart.gmart_api.dto.SignUpDto;
 import com.gmart.gmart_api.dto.UserDto;
 import com.gmart.gmart_api.exceptions.AppException;
@@ -27,7 +28,6 @@ public class UserService {
     }
 
     private UserDto toUserDto(User user) {
-        // Convert User entity to UserDto manually
         UserDto userDto = new UserDto();
         userDto.setId(user.getUserId());
         userDto.setUsername(user.getUsername());
@@ -39,7 +39,6 @@ public class UserService {
     }
 
     private User signUpDtoToUser(SignUpDto signUpDto) {
-        // Convert SignUpDto to User manually
         User user = new User();
         user.setUsername(signUpDto.username());
         user.setFirstName(signUpDto.firstName());
@@ -61,6 +60,16 @@ public class UserService {
         User savedUser = userRepository.save(user);
 
         return toUserDto(savedUser);
+    }
+
+    public UserDto login(CredentialsDto credentialsDto) {
+        User user = userRepository.findByUsername(credentialsDto.username())
+                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+
+        if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.password()), user.getPassword())) {
+            return toUserDto(user);
+        }
+        throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
 
     public UserDto findByUsername(String username) {
