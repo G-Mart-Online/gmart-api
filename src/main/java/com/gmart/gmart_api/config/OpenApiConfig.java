@@ -20,7 +20,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         title="Gmart-Online-API",
         version = "1.0",
         license = @License(
-                name="Licencse name",
+                name="License name",
                 url="https://gmartonline.com/"
         ),
         termsOfService = "Terms of Service"
@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                                 url = "http://localhost:8080"
                         ),
                         @Server(
-                                description="Prudction Environment",
+                                description="Production Environment",
                                 url = "https://gmartonline.com/"
                         )
                 },

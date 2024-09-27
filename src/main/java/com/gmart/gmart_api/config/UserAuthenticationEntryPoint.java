@@ -35,7 +35,6 @@ public class UserAuthenticationEntryPoint implements AuthenticationEntryPoint {
             objectMapper.writeValue(response.getOutputStream(), new ErrorDto("Unauthorized path"));
         } catch (IOException e) {
             logger.error("Error writing to the response output stream", e);
-            // Handle or log the exception appropriately
             throw e;
         }
     }

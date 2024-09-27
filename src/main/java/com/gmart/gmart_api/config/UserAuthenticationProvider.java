@@ -35,7 +35,6 @@ public class UserAuthenticationProvider {
 
     @PostConstruct
     protected void init() {
-        // This is to avoid having the raw secret key available in the JVM
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
@@ -70,7 +69,6 @@ public class UserAuthenticationProvider {
 
             return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
         } catch (JWTVerificationException e) {
-            // For simplicity, rethrowing the exception here
             throw e;
         }
     }
@@ -88,7 +86,6 @@ public class UserAuthenticationProvider {
 
             return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
         } catch (JWTVerificationException e) {
-            // For simplicity, rethrowing the exception here
             throw e;
         }
     }
