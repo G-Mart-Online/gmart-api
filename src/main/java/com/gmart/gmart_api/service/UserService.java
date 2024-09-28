@@ -6,6 +6,7 @@ import com.gmart.gmart_api.dto.UserDto;
 import com.gmart.gmart_api.exceptions.AppException;
 import com.gmart.gmart_api.model.User;
 import com.gmart.gmart_api.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,10 +22,14 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final ModelMapper modelMapper;
+
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, ModelMapper mapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.modelMapper = mapper;
+
     }
 
     private UserDto toUserDto(User user) {
@@ -46,6 +51,19 @@ public class UserService {
         user.setEmail(signUpDto.email());
         return user;
     }
+
+
+//    නිමේෂ් ගොතයා කෝඩ් එක වෙනස් කරොත් මැරෙන්නඩ් හදන නිසා කොමෙන්ට් කරලා තිබ්බා
+
+//    private UserDto toUserDto(User user) {
+//        UserDto userDto = modelMapper.map(user,UserDto.class);
+//        return userDto;
+//    }
+//
+//    private User signUpDtoToUser(SignUpDto signUpDto) {
+//        User user = modelMapper.map(signUpDto,User.class);
+//        return user;
+//    }
 
     public UserDto register(SignUpDto userDto) {
         Optional<User> optionalUser = userRepository.findByUsername(userDto.username());
