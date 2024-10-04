@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class UserAuthenticationProvider {
@@ -49,6 +50,7 @@ public class UserAuthenticationProvider {
                 .withExpiresAt(validity)
                 .withClaim(FIRST_NAME_CLAIM, user.getFirstName())
                 .withClaim(LAST_NAME_CLAIM, user.getLastName())
+                .withClaim("roles", new ArrayList<>(user.getRoles())) // Add roles to the token
                 .sign(algorithm);
     }
 
@@ -65,9 +67,15 @@ public class UserAuthenticationProvider {
                     .username(decoded.getSubject())
                     .firstName(decoded.getClaim(FIRST_NAME_CLAIM).asString())
                     .lastName(decoded.getClaim(LAST_NAME_CLAIM).asString())
+                    .roles(new HashSet<>(decoded.getClaim("roles").asList(String.class)))
                     .build();
 
-            return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+            // Create authorities based on roles
+            Collection<GrantedAuthority> authorities = user.getRoles().stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+
+            return new UsernamePasswordAuthenticationToken(user, null, authorities);
         } catch (JWTVerificationException e) {
             throw e;
         }

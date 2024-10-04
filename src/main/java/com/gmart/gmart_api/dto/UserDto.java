@@ -1,5 +1,7 @@
 package com.gmart.gmart_api.dto;
 
+import java.util.Set;
+
 public class UserDto {
 
     private String id;
@@ -8,6 +10,7 @@ public class UserDto {
     private String username;
     private String email;
     private String token;
+    private Set<String> roles;
 
     public String getId() {
         return id;
@@ -57,6 +60,14 @@ public class UserDto {
         this.email = email;
     }
 
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
     public static class Builder {
         private String id;
         private String firstName;
@@ -65,6 +76,8 @@ public class UserDto {
         private String email;
 
         private String token;
+
+        private Set<String> roles;
 
         public Builder id(String id) {
             this.id = id;
@@ -96,6 +109,11 @@ public class UserDto {
             return this;
         }
 
+        public Builder roles(Set<String> roles) {
+            this.roles = roles;
+            return this;
+        }
+
         public UserDto build() {
             UserDto user = new UserDto();
             user.setId(this.id);
@@ -104,6 +122,7 @@ public class UserDto {
             user.setUsername(this.username);
             user.setEmail(this.email);
             user.setToken(this.token);
+            user.setRoles(this.roles);
             return user;
         }
     }
