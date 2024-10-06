@@ -59,10 +59,10 @@ public class OrderService {
     public Order updateOrderStatus(String orderId, String status) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderId));
 
-        try{
+        try {
             order.setStatus(status);
             return orderRepository.save(order);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to update the order status for Order ID: " + orderId);
         }
