@@ -2,7 +2,8 @@ package com.gmart.gmart_api.controller;
 
 import com.gmart.gmart_api.config.UserAuthenticationProvider;
 import com.gmart.gmart_api.dto.CredentialsDto;
-import com.gmart.gmart_api.dto.SignUpDto;
+import com.gmart.gmart_api.dto.LogInDto;
+import com.gmart.gmart_api.dto.RegisterUserDto;
 import com.gmart.gmart_api.dto.UserDto;
 import com.gmart.gmart_api.service.UserService;
 import jakarta.validation.Valid;
@@ -30,16 +31,16 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody @Valid SignUpDto user) {
+    public ResponseEntity<UserDto> register(@RequestBody @Valid RegisterUserDto registerUserDto) {
 
-        UserDto createdUser = userService.register(user);
+        UserDto createdUser = userService.register(registerUserDto);
         createdUser.setToken(userAuthenticationProvider.createToken(createdUser));
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> login(@RequestBody @Valid CredentialsDto credentialsDto) {
-        UserDto userDto = userService.login(credentialsDto);
+    public ResponseEntity<UserDto> login(@RequestBody @Valid LogInDto logInDto) {
+        UserDto userDto = userService.login(logInDto);
         userDto.setToken(userAuthenticationProvider.createToken(userDto));
         return ResponseEntity.ok(userDto);
     }
