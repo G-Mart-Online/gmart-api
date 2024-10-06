@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -39,6 +40,7 @@ public class UserService {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
+        userDto.setRoles(user.getRoles());
 
         return userDto;
     }
@@ -49,6 +51,12 @@ public class UserService {
         user.setFirstName(signUpDto.firstName());
         user.setLastName(signUpDto.lastName());
         user.setEmail(signUpDto.email());
+        if (signUpDto.roles() != null && !signUpDto.roles().isEmpty()) {
+            user.setRoles(signUpDto.roles());
+        } else {
+            // Assign default role if roles are not provided in DTO
+            user.setRoles(Set.of("ROLE_USER"));
+        }
         return user;
     }
 
