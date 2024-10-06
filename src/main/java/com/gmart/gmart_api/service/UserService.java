@@ -1,6 +1,5 @@
 package com.gmart.gmart_api.service;
 
-import com.gmart.gmart_api.dto.CredentialsDto;
 import com.gmart.gmart_api.dto.LogInDto;
 import com.gmart.gmart_api.dto.RegisterUserDto;
 import com.gmart.gmart_api.dto.UserDto;
@@ -36,12 +35,12 @@ public class UserService {
     }
 
     private UserDto toUserDto(User user) {
-        UserDto userDto = modelMapper.map(user,UserDto.class);
+        UserDto userDto = modelMapper.map(user, UserDto.class);
         return userDto;
     }
 
     private User signUpDtoToUser(RegisterUserDto signUpDto) {
-        User user = modelMapper.map(signUpDto,User.class);
+        User user = modelMapper.map(signUpDto, User.class);
         return user;
     }
 
@@ -72,12 +71,11 @@ public class UserService {
 
     //delete user by Id
     @Transactional
-    public String deleteUserById(String userId){
-        if(userRepository.existsById(userId)){
+    public String deleteUserById(String userId) {
+        if (userRepository.existsById(userId)) {
             userRepository.deleteById(userId);
-            return  "User deleled successfully";
-        }
-        else{
+            return "User deleled successfully";
+        } else {
             throw new UsernameNotFoundException("User with ID " + userId + " not found");
         }
     }
