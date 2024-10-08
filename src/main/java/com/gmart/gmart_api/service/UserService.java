@@ -4,7 +4,9 @@ import com.gmart.gmart_api.dto.CredentialsDto;
 import com.gmart.gmart_api.dto.LogInDto;
 import com.gmart.gmart_api.dto.RegisterUserDto;
 import com.gmart.gmart_api.dto.UserDto;
-import com.gmart.gmart_api.exceptions.AppException;
+import com.gmart.gmart_api.exceptions.EmailAlreadyExistException;
+import com.gmart.gmart_api.exceptions.LogInException;
+import com.gmart.gmart_api.exceptions.UserNotFoundException;
 import com.gmart.gmart_api.model.User;
 import com.gmart.gmart_api.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -49,7 +51,9 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
         if (optionalUser.isPresent()) {
-            throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
+           // throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
+            throw  new EmailAlreadyExistException("Email Already Registered. Enter Another Email Address");
+
         }
 
         User user = signUpDtoToUser(userDto);
@@ -62,12 +66,12 @@ public class UserService {
 
     public UserDto login(LogInDto logInDto) {
         User user = userRepository.findUserByEmail(logInDto.getEmail())
-                .orElseThrow(() -> new AppException("Email or Password is incorrect", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new LogInException("Email or Password is incorrect"));
 
         if (passwordEncoder.matches(CharBuffer.wrap(logInDto.getPassword()), user.getPassword())) {
             return toUserDto(user);
         }
-        throw new AppException("Email or Password is incorrect", HttpStatus.BAD_REQUEST);
+        throw new LogInException("Email or Password is incorrect");
     }
 
     //delete user by Id
@@ -78,14 +82,14 @@ public class UserService {
             return  "User deleled successfully";
         }
         else{
-            throw new UsernameNotFoundException("User with ID " + userId + " not found");
+            throw new UserNotFoundException("User not Found");
         }
     }
 
 
     public UserDto findByUsername(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new UserNotFoundException("User not Found"));
         return toUserDto(user);
     }
 
