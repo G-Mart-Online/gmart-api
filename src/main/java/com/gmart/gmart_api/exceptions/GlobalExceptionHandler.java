@@ -36,7 +36,6 @@ public class GlobalExceptionHandler {
                 ,httpStatus);
     }
 
-    //log in exceptions
     @ExceptionHandler(value = {LogInException.class})
     public ResponseEntity<Object> handleLogInException(
             LogInException exception
@@ -88,8 +87,5 @@ public class GlobalExceptionHandler {
                 ZonedDateTime.now());
         return new ResponseEntity<>(result,httpStatus);
     }
-
-
-
 
 }

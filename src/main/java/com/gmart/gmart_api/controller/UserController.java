@@ -31,7 +31,6 @@ public class UserController {
     public ResponseEntity<String> deleteUserById(@PathVariable String uid){
            var result = userService.deleteUserById(uid);
            return new ResponseEntity<>(result, HttpStatus.OK);
-
     }
 
 

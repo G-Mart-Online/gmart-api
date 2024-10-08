@@ -51,9 +51,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
         if (optionalUser.isPresent()) {
-           // throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
             throw  new EmailAlreadyExistException("Email Already Registered. Enter Another Email Address");
-
         }
 
         User user = signUpDtoToUser(userDto);
@@ -74,7 +72,6 @@ public class UserService {
         throw new LogInException("Email or Password is incorrect");
     }
 
-    //delete user by Id
     @Transactional
     public String deleteUserById(String userId){
         if(userRepository.existsById(userId)){
