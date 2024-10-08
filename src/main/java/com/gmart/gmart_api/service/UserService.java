@@ -31,7 +31,6 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = mapper;
-
     }
 
     private UserDto toUserDto(User user) {
@@ -69,17 +68,15 @@ public class UserService {
         throw new AppException("Email or Password is incorrect", HttpStatus.BAD_REQUEST);
     }
 
-    //delete user by Id
     @Transactional
     public String deleteUserById(String userId) {
         if (userRepository.existsById(userId)) {
             userRepository.deleteById(userId);
-            return "User deleled successfully";
+            return "User deleted successfully";
         } else {
             throw new UsernameNotFoundException("User with ID " + userId + " not found");
         }
     }
-
 
     public UserDto findByUsername(String username) {
         User user = userRepository.findByUsername(username)
