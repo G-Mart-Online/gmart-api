@@ -1,6 +1,6 @@
 package com.gmart.gmart_api.service;
 
-import com.gmart.gmart_api.exceptions.OrderNotFoundException;
+
 import com.gmart.gmart_api.model.Order;
 import com.gmart.gmart_api.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class OrderService {
     }
 
     public Order getOrderById(String orderId) {
-        return orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found with Id " + orderId));
+        return orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Order not found with Id " + orderId));
     }
 
     public void deleteOrderById(String orderId) {
@@ -52,12 +52,12 @@ public class OrderService {
                 throw new RuntimeException("Failed to delete the order with ID: " + orderId);
             }
         } else {
-            throw new OrderNotFoundException("Order not found with Id " + orderId);
+            throw new IllegalArgumentException("Order not found with Id " + orderId);
         }
     }
 
     public Order updateOrderStatus(String orderId, String status) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderId));
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
 
         try {
             order.setStatus(status);
