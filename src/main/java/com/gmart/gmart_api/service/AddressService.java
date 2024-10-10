@@ -6,6 +6,8 @@ import com.gmart.gmart_api.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +68,12 @@ public class AddressService {
             address.setCity(addressDetails.getCity());
             address.setProvince(addressDetails.getProvince());
             address.setPostalCode(addressDetails.getPostalCode());
-            address.setLastUpdateDate(addressDetails.getLastUpdateDate());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = new Date();
+            String formattedDate = simpleDateFormat.format(currentDate);
+
+            address.setLastUpdateDate(formattedDate);
 
             return addressRepository.save(address);
 

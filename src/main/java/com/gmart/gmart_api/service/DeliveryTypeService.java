@@ -6,6 +6,8 @@ import com.gmart.gmart_api.repository.DeliveryTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +65,12 @@ public class DeliveryTypeService {
             deliveryType.setDeliveryService(deliveryTypeDetails.getDeliveryService());
             deliveryType.setTrackingSiteUrl(deliveryTypeDetails.getTrackingSiteUrl());
             deliveryType.setDescription(deliveryTypeDetails.getDescription());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = new Date();
+            String formattedDate = simpleDateFormat.format(currentDate);
+
+            deliveryType.setLastUpdatedDate(formattedDate);
 
             return deliveryTypeRepository.save(deliveryType);
 

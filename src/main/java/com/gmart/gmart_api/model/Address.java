@@ -29,5 +29,5 @@ public class Address {
 
     private String province;
 
-    private Date lastUpdateDate;
+    private String lastUpdateDate;
 }

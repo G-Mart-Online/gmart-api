@@ -20,4 +20,6 @@ public class DeliveryType {
     private String trackingSiteUrl;
 
     private String description;
+
+    private String lastUpdatedDate;
 }

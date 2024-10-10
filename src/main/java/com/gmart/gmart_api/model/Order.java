@@ -32,11 +32,11 @@ public class Order {
 
     private String contactNumberTwo;
 
-    private Date placedDate;
+    private String placedDate;
 
-    private Date updatedDate;
+    private String updatedDate;
 
-    private Date deliveredDate;
+    private String deliveredDate;
 
     private String trackingId;
 
