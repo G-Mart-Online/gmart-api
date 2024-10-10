@@ -10,8 +10,6 @@ import com.gmart.gmart_api.model.User;
 import com.gmart.gmart_api.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +47,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
         if (optionalUser.isPresent()) {
-            throw  new EmailAlreadyExistException("Email Already Registered. Enter Another Email Address");
+            throw new EmailAlreadyExistException("Email Already Registered. Enter Another Email Address");
         }
 
         User user = signUpDtoToUser(userDto);
@@ -74,9 +72,8 @@ public class UserService {
     public String deleteUserById(String userId) {
         if (userRepository.existsById(userId)) {
             userRepository.deleteById(userId);
-            return  "User deleled successfully";
-        }
-        else{
+            return "User deleled successfully";
+        } else {
             throw new UserNotFoundException("User not Found");
         }
     }
