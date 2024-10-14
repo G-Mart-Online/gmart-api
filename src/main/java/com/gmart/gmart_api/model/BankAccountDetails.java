@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,9 +26,9 @@ public class BankAccountDetails {
 
     private String branchCode;
 
-    private LocalDateTime createdAt;
+    private String createdAt;
 
-    private LocalDateTime updatedAt;
+    private String updatedAt;
 
     private User user;
 

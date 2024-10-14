@@ -6,7 +6,8 @@ import com.gmart.gmart_api.repository.BankAccountDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,11 @@ public class BankAccountDetailService {
 
     public BankAccountDetails saveBankAccountDetails(BankAccountDetails bankAccountDetails) {
         try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = new Date();
+            String formattedDate = simpleDateFormat.format(currentDate);
+            bankAccountDetails.setCreatedAt(formattedDate);
+
             return bankAccountDetailsRepository.save(bankAccountDetails);
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,8 +72,13 @@ public class BankAccountDetailService {
             existsBankAccountDetails.setBankName(bankAccountDetails.getBankName());
             existsBankAccountDetails.setBranchName(bankAccountDetails.getBranchName());
             existsBankAccountDetails.setBranchCode(bankAccountDetails.getBranchCode());
-            existsBankAccountDetails.setUpdatedAt(LocalDateTime.now());
             existsBankAccountDetails.setUser(bankAccountDetails.getUser());
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = new Date();
+            String formattedDate = simpleDateFormat.format(currentDate);
+
+            existsBankAccountDetails.setUpdatedAt(formattedDate);
 
             return bankAccountDetailsRepository.save(existsBankAccountDetails);
 
