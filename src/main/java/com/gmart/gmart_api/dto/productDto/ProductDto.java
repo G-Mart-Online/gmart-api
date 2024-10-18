@@ -1,5 +1,4 @@
-package com.gmart.gmart_api.model;
-
+package com.gmart.gmart_api.dto.productDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,12 +9,9 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Product {
-
-    @Id
-    private String productId;
+@AllArgsConstructor
+public class ProductDto {
     private String description;
     private Integer stockQuantity;
     private float wholesalePrice;
@@ -26,6 +22,4 @@ public class Product {
     private boolean status;
     private String supplier_Id;
     private String category_Id;
-    private ZonedDateTime created_at;
-    private ZonedDateTime last_updated_at;
 }
