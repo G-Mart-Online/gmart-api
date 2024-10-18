@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @Service
@@ -32,14 +33,35 @@ public class ProductService implements IProductService {
     }
 
     private Product ConvertToEntity(ProductDto productDto){
-        Product product = modelMapper.map(productDto,Product.class);
-        product.setCreated_at(ZonedDateTime.now());
-        product.setLast_updated_at(ZonedDateTime.now());
+        Product product = new Product();
+        product.setDescription(productDto.getDescription());
+        product.setStockQuantity(productDto.getStockQuantity());
+        product.setWholesalePrice(productDto.getWholesalePrice());
+        product.setRetailPrice(productDto.getRetailPrice());
+        product.setImageUrls(productDto.getImageUrls());
+        product.setVideoUrl(productDto.getVideoUrl());
+        product.setSeoTags(productDto.getSeoTags());
+        product.setStatus(false);
+        product.setSupplier_Id(productDto.getSupplier_Id());
+        product.setCategory_Id(productDto.getCategory_Id());
+        product.setCreated_at(Instant.now());
+        product.setLast_updated_at(Instant.now());
         return product;
     }
 
     private GetProductDto ConvertToDto(Product product){
-        GetProductDto newDto = modelMapper.map(product, GetProductDto.class);
+        GetProductDto newDto = new GetProductDto();
+        newDto.setProductId(product.getProductId());
+        newDto.setDescription(product.getDescription());
+        newDto.setStockQuantity(product.getStockQuantity());
+        newDto.setWholesalePrice(product.getWholesalePrice());
+        newDto.setRetailPrice(product.getRetailPrice());
+        newDto.setImageUrls(product.getImageUrls());
+        newDto.setVideoUrl(product.getVideoUrl());
+        newDto.setSeoTags(product.getSeoTags());
+        newDto.setStatus(product.isStatus());
+        newDto.setSupplier_Id(product.getSupplier_Id());
+        newDto.setCategory_Id(product.getCategory_Id());
         return newDto;
     }
 }

@@ -19,7 +19,6 @@ public class ProductDto {
     private List<String> imageUrls;
     private String videoUrl;
     private List<String> seoTags;
-    private boolean status;
     private String supplier_Id;
     private String category_Id;
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -26,6 +27,6 @@ public class Product {
     private boolean status;
     private String supplier_Id;
     private String category_Id;
-    private ZonedDateTime created_at;
-    private ZonedDateTime last_updated_at;
+    private Instant created_at;
+    private Instant last_updated_at;
 }
