@@ -1,6 +1,5 @@
 package com.gmart.gmart_api.service;
 
-import com.gmart.gmart_api.dto.CredentialsDto;
 import com.gmart.gmart_api.dto.LogInDto;
 import com.gmart.gmart_api.dto.RegisterUserDto;
 import com.gmart.gmart_api.dto.UserDto;
@@ -11,8 +10,6 @@ import com.gmart.gmart_api.model.User;
 import com.gmart.gmart_api.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,16 +31,15 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = mapper;
-
     }
 
     private UserDto toUserDto(User user) {
-        UserDto userDto = modelMapper.map(user,UserDto.class);
+        UserDto userDto = modelMapper.map(user, UserDto.class);
         return userDto;
     }
 
     private User signUpDtoToUser(RegisterUserDto signUpDto) {
-        User user = modelMapper.map(signUpDto,User.class);
+        User user = modelMapper.map(signUpDto, User.class);
         return user;
     }
 
@@ -51,7 +47,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUsername(userDto.getUsername());
 
         if (optionalUser.isPresent()) {
-            throw  new EmailAlreadyExistException("Email Already Registered. Enter Another Email Address");
+            throw new EmailAlreadyExistException("Email Already Registered. Enter Another Email Address");
         }
 
         User user = signUpDtoToUser(userDto);
@@ -73,16 +69,14 @@ public class UserService {
     }
 
     @Transactional
-    public String deleteUserById(String userId){
-        if(userRepository.existsById(userId)){
+    public String deleteUserById(String userId) {
+        if (userRepository.existsById(userId)) {
             userRepository.deleteById(userId);
-            return  "User deleled successfully";
-        }
-        else{
+            return "User deleled successfully";
+        } else {
             throw new UserNotFoundException("User not Found");
         }
     }
-
 
     public UserDto findByUsername(String username) {
         User user = userRepository.findByUsername(username)

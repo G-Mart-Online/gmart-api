@@ -6,6 +6,8 @@ import com.gmart.gmart_api.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,12 @@ public class OrderService {
 
     public Order saveOrder(Order order) {
         try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = new Date();
+            String formattedDate = simpleDateFormat.format(currentDate);
+
+            order.setPlacedDate(formattedDate);
+
             return orderRepository.save(order);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +68,13 @@ public class OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
 
         try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = new Date();
+            String formattedDate = simpleDateFormat.format(currentDate);
+
+            order.setUpdatedDate(formattedDate);
             order.setStatus(status);
+
             return orderRepository.save(order);
         } catch (Exception e) {
             e.printStackTrace();

@@ -15,77 +15,72 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleGlobalException(Exception exception) {
         HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 
-        var result =CustomException.of(
+        var result = CustomException.of(
                 "An unexpected error occurred: " + exception.getMessage(),
                 httpStatus,
                 ZonedDateTime.now());
-        return new ResponseEntity<>(result,httpStatus);
+        return new ResponseEntity<>(result, httpStatus);
     }
 
     @ExceptionHandler(value = {EmailAlreadyExistException.class})
     public ResponseEntity<Object> handleEmailNotFoundException(
             EmailAlreadyExistException exception
-    )
-    {
+    ) {
         HttpStatus httpStatus = HttpStatus.CONFLICT;
-        var result =CustomException.of(
+        var result = CustomException.of(
                 exception.getMessage(),
                 httpStatus,
                 ZonedDateTime.now());
         return new ResponseEntity<>(result
-                ,httpStatus);
+                , httpStatus);
     }
 
     @ExceptionHandler(value = {LogInException.class})
     public ResponseEntity<Object> handleLogInException(
             LogInException exception
-    )
-    {
+    ) {
         HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
-        var result =CustomException.of(
+        var result = CustomException.of(
                 exception.getMessage(),
                 httpStatus,
                 ZonedDateTime.now());
-        return new ResponseEntity<>(result,httpStatus);
+        return new ResponseEntity<>(result, httpStatus);
     }
 
     @ExceptionHandler(value = {UserNotFoundException.class})
     public ResponseEntity<Object> handleUserNotFoundException(
             UserNotFoundException exception
-    )
-    {
+    ) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-        var result =CustomException.of(
+        var result = CustomException.of(
                 exception.getMessage(),
                 httpStatus,
                 ZonedDateTime.now());
-        return new ResponseEntity<>(result,httpStatus);
+        return new ResponseEntity<>(result, httpStatus);
     }
 
     @ExceptionHandler(value = {OrderNotFoundException.class})
     public ResponseEntity<Object> handleOrderNotFoundException(
             OrderNotFoundException exception
-    )
-    {
+    ) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-        var result =CustomException.of(
+        var result = CustomException.of(
                 exception.getMessage(),
                 httpStatus,
                 ZonedDateTime.now());
-        return new ResponseEntity<>(result,httpStatus);
+        return new ResponseEntity<>(result, httpStatus);
     }
 
     @ExceptionHandler(value = {OrderItemNotFoundException.class})
     public ResponseEntity<Object> handleOrderItemNotFoundException(
             OrderItemNotFoundException exception
-    )
-    {
+    ) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
-        var result =CustomException.of(
+        var result = CustomException.of(
                 exception.getMessage(),
                 httpStatus,
                 ZonedDateTime.now());
-        return new ResponseEntity<>(result,httpStatus);
+        return new ResponseEntity<>(result, httpStatus);
     }
 
 }

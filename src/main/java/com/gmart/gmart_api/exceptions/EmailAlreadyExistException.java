@@ -1,7 +1,12 @@
 package com.gmart.gmart_api.exceptions;
 
-public class EmailAlreadyExistException extends  RuntimeException{
-    public EmailAlreadyExistException(String message) {super(message);}
-    public EmailAlreadyExistException(String message, Throwable cause) {super(message,cause);}
+public class EmailAlreadyExistException extends RuntimeException {
+    public EmailAlreadyExistException(String message) {
+        super(message);
+    }
+
+    public EmailAlreadyExistException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

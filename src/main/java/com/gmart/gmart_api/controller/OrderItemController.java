@@ -1,6 +1,5 @@
 package com.gmart.gmart_api.controller;
 
-import com.gmart.gmart_api.model.Order;
 import com.gmart.gmart_api.model.OrderItem;
 import com.gmart.gmart_api.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;

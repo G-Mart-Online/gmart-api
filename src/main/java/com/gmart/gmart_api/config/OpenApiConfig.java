@@ -13,27 +13,27 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @OpenAPIDefinition(info = @Info(
         contact = @Contact(
                 name = "gmart-online-api",
-                email="contactgmart@gmartonline.com",
-                url ="https://gmartonline.com"
+                email = "contactgmart@gmartonline.com",
+                url = "https://gmartonline.com"
         ),
         description = "Open API documentation for gmart online",
-        title="Gmart-Online-API",
+        title = "Gmart-Online-API",
         version = "1.0",
         license = @License(
-                name="License name",
-                url="https://gmartonline.com/"
+                name = "License name",
+                url = "https://gmartonline.com/"
         ),
         termsOfService = "Terms of Service"
 
-) ,
+),
         servers =
                 {
                         @Server(
-                                description= "Local ENV",
+                                description = "Local ENV",
                                 url = "http://localhost:8080"
                         ),
                         @Server(
-                                description="Production Environment",
+                                description = "Production Environment",
                                 url = "https://gmartonline.com/"
                         )
                 },
@@ -45,9 +45,9 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 )
 @SecurityScheme(
-        name="bearerAuth",
+        name = "bearerAuth",
         description = "JWT AUTH description",
-        scheme="bearer",
+        scheme = "bearer",
         type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
         in = SecuritySchemeIn.HEADER
