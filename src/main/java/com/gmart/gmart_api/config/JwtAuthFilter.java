@@ -7,10 +7,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserAuthenticationProvider userAuthenticationProvider;
@@ -32,13 +34,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 String[] authElements = header.split(" ");
 
                 if (authElements.length == 2 && "Bearer".equals(authElements[0])) {
-                    if ("GET".equals(request.getMethod())) {
-                        SecurityContextHolder.getContext().setAuthentication(
-                                userAuthenticationProvider.validateToken(authElements[1]));
-                    } else {
-                        SecurityContextHolder.getContext().setAuthentication(
-                                userAuthenticationProvider.validateTokenStrongly(authElements[1]));
-                    }
+                    SecurityContextHolder.getContext().setAuthentication(
+                            userAuthenticationProvider.validateToken(authElements[1]));
                 }
             }
         } catch (Exception e) {

@@ -4,7 +4,6 @@ import com.gmart.gmart_api.model.User;
 import com.gmart.gmart_api.repository.UserRepository;
 import com.gmart.gmart_api.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -18,7 +17,7 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
-    private  final UserService userService;
+    private final UserService userService;
 
 
     @Secured({"ROLE_ADMIN", "ROLE_SELLER"})
@@ -28,11 +27,8 @@ public class UserController {
     }
 
     @DeleteMapping("/{uid}")
-    public ResponseEntity<String> deleteUserById(@PathVariable String uid){
-           var result = userService.deleteUserById(uid);
-           return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<String> deleteUserById(@PathVariable String uid) {
+        var result = userService.deleteUserById(uid);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
-
 }
