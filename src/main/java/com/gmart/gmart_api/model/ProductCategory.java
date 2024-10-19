@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @Data
@@ -15,6 +16,6 @@ public class ProductCategory {
     private String categoryId;
     private String categoryName;
     private String categoryDescription;
-    private ZonedDateTime created_at;
-    private ZonedDateTime last_updated_at;
+    private Instant created_at;
+    private Instant last_updated_at;
 }
