@@ -2,6 +2,7 @@ package com.gmart.gmart_api.service;
 
 import com.gmart.gmart_api.dto.productDto.GetProductDto;
 import com.gmart.gmart_api.dto.productDto.ProductDto;
+import com.gmart.gmart_api.dto.productDto.UpdateProductDto;
 import com.gmart.gmart_api.model.Product;
 import com.gmart.gmart_api.repository.ProductRepository;
 import com.gmart.gmart_api.service.impl.IProductService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,6 +59,36 @@ public class ProductService implements IProductService {
             throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
         }
     }
+
+    // Update product by ID
+    @Override
+    public GetProductDto updateProduct(String productId, UpdateProductDto productDto) {
+        // Find the existing product by ID
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if (!productOptional.isPresent()) {
+            throw new IllegalArgumentException("Product with ID " + productId + " not found.");
+        }
+
+        // Update the product details
+        Product product = productOptional.get();
+        product.setDescription(productDto.getDescription());
+        product.setStockQuantity(productDto.getStockQuantity());
+        product.setWholesalePrice(productDto.getWholesalePrice());
+        product.setRetailPrice(productDto.getRetailPrice());
+        product.setImageUrls(productDto.getImageUrls());
+        product.setVideoUrl(productDto.getVideoUrl());
+        product.setSeoTags(productDto.getSeoTags());
+        product.setSupplier_Id(productDto.getSupplier_Id());
+        product.setCategory_Id(productDto.getCategory_Id());
+        product.setLast_updated_at(Instant.now());
+
+        // Save the updated product to the database
+        Product updatedProduct = productRepository.save(product);
+
+        // Convert the updated product entity to DTO and return
+        return ConvertToDto(updatedProduct);
+    }
+
 
 
 

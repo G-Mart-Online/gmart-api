@@ -3,6 +3,7 @@ package com.gmart.gmart_api.controller;
 import com.gmart.gmart_api.config.Response;
 import com.gmart.gmart_api.dto.productDto.GetProductDto;
 import com.gmart.gmart_api.dto.productDto.ProductDto;
+import com.gmart.gmart_api.dto.productDto.UpdateProductDto;
 import com.gmart.gmart_api.service.impl.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,5 +54,15 @@ public class ProductController extends AbstractController{
         productService.deleteProductById(productId);
         return createDeleteSuccessResponse();
 
+    }
+
+    // Update product by ID
+    @PutMapping("/{productId}")
+    public ResponseEntity<GetProductDto> updateProduct(
+            @PathVariable("productId") String productId,
+            @RequestBody UpdateProductDto productDto) {
+
+            GetProductDto updatedProduct = productService.updateProduct(productId, productDto);
+            return ResponseEntity.ok(updatedProduct);
     }
 }
