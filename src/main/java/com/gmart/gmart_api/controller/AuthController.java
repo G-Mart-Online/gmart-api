@@ -1,7 +1,6 @@
 package com.gmart.gmart_api.controller;
 
 import com.gmart.gmart_api.config.UserAuthenticationProvider;
-import com.gmart.gmart_api.dto.CredentialsDto;
 import com.gmart.gmart_api.dto.LogInDto;
 import com.gmart.gmart_api.dto.RegisterUserDto;
 import com.gmart.gmart_api.dto.UserDto;
@@ -44,4 +43,5 @@ public class AuthController {
         userDto.setToken(userAuthenticationProvider.createToken(userDto));
         return ResponseEntity.ok(userDto);
     }
+
 }

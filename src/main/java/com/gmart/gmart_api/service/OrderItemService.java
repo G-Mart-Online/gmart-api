@@ -1,6 +1,5 @@
 package com.gmart.gmart_api.service;
 
-import com.gmart.gmart_api.exceptions.OrderItemNotFoundException;
 import com.gmart.gmart_api.model.OrderItem;
 import com.gmart.gmart_api.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class OrderItemService {
     }
 
     public OrderItem getOrderItemById(String orderItemId) {
-        return orderItemRepository.findById(orderItemId).orElseThrow(() -> new OrderItemNotFoundException("Order item not found with Id " + orderItemId));
+        return orderItemRepository.findById(orderItemId).orElseThrow(() -> new IllegalArgumentException("Order item not found with Id " + orderItemId));
     }
 
     public void deleteOrderItemById(String orderItemId) {
@@ -52,12 +51,12 @@ public class OrderItemService {
                 throw new RuntimeException("Failed to delete the order item with ID: " + orderItemId);
             }
         } else {
-            throw new OrderItemNotFoundException("Order item not found with Id " + orderItemId);
+            throw new IllegalArgumentException("Order item not found with Id " + orderItemId);
         }
     }
 
     public OrderItem updateOrderItem(String orderItemId, OrderItem orderItemDetails) {
-        OrderItem orderItem = orderItemRepository.findById(orderItemId).orElseThrow(() -> new OrderItemNotFoundException("Order item not found with id " + orderItemId));
+        OrderItem orderItem = orderItemRepository.findById(orderItemId).orElseThrow(() -> new IllegalArgumentException("Order item not found with id " + orderItemId));
 
         try {
             orderItem.setProduct(orderItemDetails.getProduct());

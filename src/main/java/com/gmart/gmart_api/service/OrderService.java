@@ -1,11 +1,13 @@
 package com.gmart.gmart_api.service;
 
-import com.gmart.gmart_api.exceptions.OrderNotFoundException;
+
 import com.gmart.gmart_api.model.Order;
 import com.gmart.gmart_api.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,12 @@ public class OrderService {
 
     public Order saveOrder(Order order) {
         try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = new Date();
+            String formattedDate = simpleDateFormat.format(currentDate);
+
+            order.setPlacedDate(formattedDate);
+
             return orderRepository.save(order);
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,7 +46,7 @@ public class OrderService {
     }
 
     public Order getOrderById(String orderId) {
-        return orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found with Id " + orderId));
+        return orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Order not found with Id " + orderId));
     }
 
     public void deleteOrderById(String orderId) {
@@ -52,15 +60,21 @@ public class OrderService {
                 throw new RuntimeException("Failed to delete the order with ID: " + orderId);
             }
         } else {
-            throw new OrderNotFoundException("Order not found with Id " + orderId);
+            throw new IllegalArgumentException("Order not found with Id " + orderId);
         }
     }
 
     public Order updateOrderStatus(String orderId, String status) {
-        Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException("Order not found with ID: " + orderId));
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
 
         try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Date currentDate = new Date();
+            String formattedDate = simpleDateFormat.format(currentDate);
+
+            order.setUpdatedDate(formattedDate);
             order.setStatus(status);
+
             return orderRepository.save(order);
         } catch (Exception e) {
             e.printStackTrace();
