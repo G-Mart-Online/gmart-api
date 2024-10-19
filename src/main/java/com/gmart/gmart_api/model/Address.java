@@ -9,7 +9,10 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Address {
+    private String street;
+    private String addressLine2;
+    private String City;
+    private String postalCode;
+    private String country;
 
-    @Id
-    private String addressId;
 }
