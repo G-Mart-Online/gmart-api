@@ -1,28 +1,28 @@
 package com.gmart.gmart_api.service;
 
-import com.gmart.gmart_api.dto.UserDto;
 import com.gmart.gmart_api.dto.productDto.GetProductDto;
 import com.gmart.gmart_api.dto.productDto.ProductDto;
 import com.gmart.gmart_api.model.Product;
 import com.gmart.gmart_api.repository.ProductRepository;
 import com.gmart.gmart_api.service.impl.IProductService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
-    private final ModelMapper modelMapper;
+
 
     @Autowired
-    public ProductService(ProductRepository productRepository, ModelMapper modelMapper) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -31,6 +31,34 @@ public class ProductService implements IProductService {
         Product savedProduct = productRepository.save(newProduct);
         return ConvertToDto(savedProduct);
     }
+
+    @Override
+    // Method to get all products without pagination
+    public List<GetProductDto> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map(this::ConvertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    // Method to get paginated products
+    public Page<GetProductDto> getPaginatedProducts(int pageNumber, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        Page<Product> paginatedProducts = productRepository.findAll(pageRequest);
+        return paginatedProducts.map(this::ConvertToDto);
+    }
+
+    @Override
+    public void deleteProductById(String productId) {
+        if (productRepository.existsById(productId)) {
+            productRepository.deleteById(productId);
+        } else {
+            throw new IllegalArgumentException("Product with ID " + productId + " does not exist.");
+        }
+    }
+
+
 
     private Product ConvertToEntity(ProductDto productDto){
         Product product = new Product();
