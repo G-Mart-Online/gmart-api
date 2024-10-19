@@ -1,7 +1,7 @@
 package com.gmart.gmart_api.service.impl;
 
-import com.gmart.gmart_api.dto.SellerRequestDto;
-import com.gmart.gmart_api.dto.SellerResponseDto;
+import com.gmart.gmart_api.dto.sellerDto.SellerRequestDto;
+import com.gmart.gmart_api.dto.sellerDto.SellerResponseDto;
 
 import java.util.List;
 

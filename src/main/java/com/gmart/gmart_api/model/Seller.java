@@ -11,6 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document(collection = "sellers")
 public class Seller extends User{
-    private String sellerCode;
     private String description;
+    private String sellerStatus;
 }

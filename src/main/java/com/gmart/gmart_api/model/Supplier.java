@@ -14,5 +14,5 @@ public class Supplier {
     private String supplierCode;
     private String description;
     private String companyName;
-    private Address warehouseLocation;
+    private String warehouseLocationId;
 }

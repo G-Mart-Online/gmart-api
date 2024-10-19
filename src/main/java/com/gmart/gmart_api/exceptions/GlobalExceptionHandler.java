@@ -83,4 +83,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(result, httpStatus);
     }
 
+    @ExceptionHandler(value = {SellerAlreadyExistsException.class})
+    public ResponseEntity<Object> handleSellerAlreadyExistsException(SellerAlreadyExistsException exception) {
+        HttpStatus httpStatus = HttpStatus.CONFLICT;
+        var result = CustomException.of(
+                exception.getMessage(),
+                httpStatus,
+                ZonedDateTime.now()
+        );
+        return new ResponseEntity<>(result, httpStatus);
+    }
+
 }
