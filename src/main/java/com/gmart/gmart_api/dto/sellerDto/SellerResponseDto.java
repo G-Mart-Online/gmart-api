@@ -16,6 +16,6 @@ public class SellerResponseDto {
     private String email;
     private String description;
     private String sellerStatus;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
+    private LocalDateTime sellerCreatedDate;
+    private LocalDateTime sellerUpdatedDate;
 }

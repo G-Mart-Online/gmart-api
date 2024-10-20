@@ -94,4 +94,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(result, httpStatus);
     }
 
+    @ExceptionHandler(value = {SellerNotFoundException.class})
+    public ResponseEntity<Object> handleSellerNotFoundException(SellerNotFoundException exception) {
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
+        var result = CustomException.of(
+                exception.getMessage(),
+                httpStatus,
+                ZonedDateTime.now()
+        );
+        return new ResponseEntity<>(result, httpStatus);
+    }
+
 }

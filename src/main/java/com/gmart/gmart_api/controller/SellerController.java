@@ -18,6 +18,18 @@ public class SellerController {
     @PostMapping("/{userId}")
     public ResponseEntity<SellerResponseDto> createSeller(@PathVariable("userId") String userId, @RequestBody SellerRequestDto sellerRequestDto) {
         SellerResponseDto sellerResponseDto = sellerService.createSeller(userId, sellerRequestDto);
+        return new ResponseEntity<>(sellerResponseDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<SellerResponseDto> getSellerById(@PathVariable("userId") String userId) {
+        SellerResponseDto sellerResponseDto = sellerService.getSellerById(userId);
+        return new ResponseEntity<>(sellerResponseDto, HttpStatus.OK);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<SellerResponseDto> updateSeller(@PathVariable("userId") String userId,  @RequestBody SellerRequestDto sellerRequestDto) {
+        SellerResponseDto sellerResponseDto = sellerService.updateSeller(userId, sellerRequestDto);
         return new ResponseEntity<>(sellerResponseDto, HttpStatus.OK);
     }
 

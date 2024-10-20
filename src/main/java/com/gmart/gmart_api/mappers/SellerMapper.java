@@ -12,19 +12,21 @@ public class SellerMapper {
         Seller seller = new Seller();
         seller.setDescription(sellerRequestDto.getDescription());
         seller.setSellerStatus(sellerRequestDto.getSellerStatus());
+
         return seller;
     }
 
-    public SellerResponseDto toSellerResponseDto(Seller seller) {
+    public SellerResponseDto toSellerResponseDto(User user, Seller seller) {
         SellerResponseDto sellerResponseDto = new SellerResponseDto();
-        sellerResponseDto.setUserId(seller.getUserId());
-        sellerResponseDto.setFirstname(seller.getFirstName());
-        sellerResponseDto.setLastname(seller.getLastName());
-        sellerResponseDto.setEmail(seller.getEmail());
-        sellerResponseDto.setCreatedDate(seller.getCreatedDate());
-        sellerResponseDto.setLastUpdatedDate(seller.getLastUpdatedDate());
+        sellerResponseDto.setUserId(user.getUserId());
+        sellerResponseDto.setFirstname(user.getFirstName());
+        sellerResponseDto.setLastname(user.getLastName());
+        sellerResponseDto.setEmail(user.getEmail());
         sellerResponseDto.setDescription(seller.getDescription());
         sellerResponseDto.setSellerStatus(seller.getSellerStatus());
+        sellerResponseDto.setSellerCreatedDate(seller.getSellerCreatedDate());
+        sellerResponseDto.setSellerUpdatedDate(seller.getSellerUpdatedDate());
+
         return sellerResponseDto;
     }
 }

@@ -3,6 +3,7 @@ package com.gmart.gmart_api.service;
 import com.gmart.gmart_api.dto.sellerDto.SellerRequestDto;
 import com.gmart.gmart_api.dto.sellerDto.SellerResponseDto;
 import com.gmart.gmart_api.exceptions.SellerAlreadyExistsException;
+import com.gmart.gmart_api.exceptions.SellerNotFoundException;
 import com.gmart.gmart_api.exceptions.UserNotFoundException;
 import com.gmart.gmart_api.mappers.SellerMapper;
 import com.gmart.gmart_api.model.Seller;
@@ -13,6 +14,7 @@ import com.gmart.gmart_api.service.impl.SellerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -35,20 +37,43 @@ public class SellerServiceImpl implements SellerService {
 
         Seller seller = sellerMapper.toSeller(sellerRequestDto);
         seller.setUserId(userId);
+        seller.setSellerStatus("PENDING");
 
         Seller savedSeller = sellerRepository.save(seller);
 
-        return sellerMapper.toSellerResponseDto(savedSeller);
+        return sellerMapper.toSellerResponseDto(user, savedSeller);
     }
 
     @Override
     public SellerResponseDto getSellerById(String userId) {
-        return null;
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("User with id " + userId + " not found")
+        );
+
+        Seller seller = sellerRepository.findById(userId).orElseThrow(
+                () -> new SellerNotFoundException("Seller with user id " + userId + " not found")
+        );
+
+        return sellerMapper.toSellerResponseDto(user, seller);
     }
 
     @Override
     public SellerResponseDto updateSeller(String userId, SellerRequestDto sellerRequestDto) {
-        return null;
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new UserNotFoundException("User with id " + userId + " not found")
+        );
+
+        Seller existingSeller = sellerRepository.findById(userId).orElseThrow(
+                () -> new SellerNotFoundException("Seller with user id " + userId + " not found")
+        );
+
+        existingSeller.setDescription(sellerRequestDto.getDescription());
+        existingSeller.setSellerStatus(sellerRequestDto.getSellerStatus());
+        existingSeller.setSellerUpdatedDate(LocalDateTime.now());
+
+        Seller updatedSeller = sellerRepository.save(existingSeller);
+
+        return sellerMapper.toSellerResponseDto(user, updatedSeller);
     }
 
     @Override
@@ -60,6 +85,5 @@ public class SellerServiceImpl implements SellerService {
     public void deleteSeller(String userId) {
 
     }
-
 
 }
