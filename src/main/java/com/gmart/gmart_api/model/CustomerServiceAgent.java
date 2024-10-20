@@ -3,16 +3,13 @@ package com.gmart.gmart_api.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "suppliers")
-public class Supplier {
-    private String supplierCode;
+@Document(collection = "customer_service_agents")
+public class CustomerServiceAgent extends User{
+    private String customerServiceAgentCode;
     private String description;
-    private String companyName;
-    private String warehouseLocationId;
 }
